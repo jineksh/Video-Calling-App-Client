@@ -3,7 +3,7 @@ import SocketContext from "../context/socket.jsx";
 import { useEffect } from "react";
 
 const CreateRoom = () => {
-    const socket = React.useContext(SocketContext);
+    const {socket} = React.useContext(SocketContext);
 
     const handleClick = () => {
         socket.emit("create-Room");
