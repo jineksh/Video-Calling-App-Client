@@ -18,12 +18,12 @@ export const SocketProvider = ({ children }) => {
   const [user, setUser] = useState();
   const [stream, setStream] = useState();
 
- const fetchUserMedia = async () => {
-    try{
+  const fetchUserMedia = async () => {
+    try {
       const mediaStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
       setStream(mediaStream);
     }
-    catch(err){
+    catch (err) {
       console.error("Error accessing media devices.", err);
     }
   }
@@ -31,8 +31,12 @@ export const SocketProvider = ({ children }) => {
 
   useEffect(() => {
     const userId = uuidV4();
-    const peerId = new peer(userId);
-    setUser( peerId );
+    const peerId = new peer(userId, {
+      host: 'localhost',
+      port: 9000,
+      path: '/my-app'
+    });
+    setUser(peerId);
     fetchUserMedia();
     // Listen only once when component mounts
     socket.on("room-Created", ({ roomId }) => {
@@ -49,7 +53,7 @@ export const SocketProvider = ({ children }) => {
 
 
   return (
-    <SocketContext.Provider value={{socket,user,stream}}>
+    <SocketContext.Provider value={{ socket, user, stream }}>
       {children}
     </SocketContext.Provider>
   );

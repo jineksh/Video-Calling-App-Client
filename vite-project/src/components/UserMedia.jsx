@@ -17,7 +17,7 @@ const UserMedia = ({ stream }) => {
                 muted={true}
                 autoPlay
                 playsInline
-                className="object-cover"
+                className="object-cover min-w-[320px] min-h-[240px]"
             >
             </video>
         </div>
